@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-do List</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+
+  <div id="app">
+
+    <h1>Coisas para fazer</h1>
+
+    
+   <ul>
+    
+    <li v-for="(sapato,index) in sapatos" :key="index">
+    <input type="checkbox" v-on:change="concluido(index)" v-model="sapato.feito" >
+    {{sapato}}   
+    <button v-on:click = "remover(index)" id="remove">X</button> 
+    </li>
+   </ul>
+
+   <input type="text" id="novo" v-model="novoSapato">
+   <button v-on:click = "adicionar">Adicionar</button>
+
+  </div>
+
+
+  <script>  
+    new Vue({
+    el: '#app',
+    data: {
+    sapatos:[],
+    novoSapato:""
+    },
+    methods:{
+
+      adicionar(){
+      const novo = this.novoSapato.trim();
+      if(novo == ''){
+       alert("Insira um valor para adicionar");
+
+      }else if( this.sapatos.includes(novo)) {
+        alert("Este sapato já esta na lista");
+
+      }else{
+        this.sapatos.push(novo);
+        this.novoSapato = '';
+
+      }
+    },
+
+      remover(index){
+        this.sapatos.splice(index, 1);
+      },
+
+      concluido(index){
+        this.sapatos[index].feito = !this.sapatos[index].feito;
+      }
+    }
+  })
+  </script>
+
+</body>
+</html>
